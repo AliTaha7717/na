@@ -20,6 +20,7 @@ class User extends Authenticatable
         'name',
         'phone',
         'password',
+        'type_acount'
     ];
 
     /**
@@ -40,4 +41,12 @@ class User extends Authenticatable
     protected $casts = [
         'password' => 'hashed',
     ];
+    public function driver()
+    {
+        return $this->hasOne(Driver::class);
+    }
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

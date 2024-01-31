@@ -31,41 +31,64 @@ class AuthController extends Controller
     {
 
         $request->user()->token()->revoke();
+
     }
     public function signup(Request $request)
     {
 
-
-        $user= User::create(
-            [
-                'name'=>$request->name,
-                'phone'=>$request->phone,
-                'password'=>Hash::make($request->password),
-            ]
-        );
-
-        if($request->taybe_acount=='user')
+        $user=User::where('phone',$request->phone)->first();
+        //dd($user);
+        if ($user!=null)
         {
-            $token=$user->createToken('ali_token')->accessToken;
-        return response([
-            'token'=>$token
-        ]);}
-        //dd($request->tyabe_acount);
-        if($request->taybe_acount=='driver')
-        {
-
-            $driver=Driver::create(
-                [
-                'user_id'=>$user->id,
-                 'taybe'=>$request->taybe,
-                    'verified'=>$request->verified
-                ]
-            );
+            if(Hash::check($request->password,$user->password))
             $token=$user->createToken('ali_token')->accessToken;
             return response([
                 'token'=>$token
             ]);
         }
+        else {
+            $user = User::create(
+                [
+                    'name' => $request->name,
+                    'phone' => $request->phone,
+                    'type_acount'=>$request->type_acount,
+                    'password' => Hash::make($request->password),
+                ]
+            );
 
+            if ($request->type_acount == 'user') {
+                $token = $user->createToken('ali_token')->accessToken;
+                return response([
+                    'token' => $token
+                ]);
+            }
+            //dd($request->tyabe_acount);
+            if ($request->type_acount == 'driver') {
+
+                $driver = Driver::create(
+                    [
+                        'user_id' => $user->id,
+                        'type' => $request->type,
+                        'verified' => $request->verified,
+
+                    ]
+                );
+                $token = $user->createToken('ali_token')->accessToken;
+                return response([
+                    'token' => $token
+                ]);
+            }
+        }
+    }
+    public function profile(Request $request)
+    {
+       // dd($request);
+        if($request->user()->type_acount=="driver")
+        return response([
+            'user'=>$request->user(),
+            'driver'=>$request->user()->driver
+        ]) ;
+        return  response([
+            'user'=>$request->user(),]);
     }
 }

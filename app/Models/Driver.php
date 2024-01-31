@@ -10,7 +10,7 @@ class Driver extends Model
     use HasFactory;
     protected $fillable = [
         'user_id',
-        'taybe',
+        'type',
         'verified'
 
     ];
@@ -26,5 +26,8 @@ class Driver extends Model
      *
      * @var array<string, string>
      */
-
+public function user()
+{
+    return $this->belongsTo(User::class);
+}
 }

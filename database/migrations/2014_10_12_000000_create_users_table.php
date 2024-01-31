@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('phone')->unique();
             $table->string('password');
             $table->rememberToken();
+            $table->string('type_acount');
             $table->timestamps();
         });
     }

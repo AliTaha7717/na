@@ -11,13 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('drivers', function (Blueprint $table) {
-
+        Schema::create('orders', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained('users');
             $table->string('type');
-            $table->boolean('verified')->default('0');
-            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->string('from');
+            $table->string('to');
+            $table->timestamp('from_time')->nullable();
+            $table->timestamp('to_time')->nullable();
+            $table->boolean('implemented')->default(0);
             $table->timestamps();
-
         });
     }
 
@@ -26,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('drivers');
+        Schema::dropIfExists('orders');
     }
 };
