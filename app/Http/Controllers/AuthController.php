@@ -83,12 +83,13 @@ class AuthController extends Controller
     public function profile(Request $request)
     {
        // dd($request);
-        if($request->user()->type_acount=="driver")
+
+        $d=Driver::query()->where('user_id','=',$request->user()->id)->get();
+        //dd($d);
         return response([
             'user'=>$request->user(),
-            'driver'=>$request->user()->driver
-        ]) ;
-        return  response([
-            'user'=>$request->user(),]);
-    }
+           'driver'=>$d
+        ]) ;}
+
+
 }

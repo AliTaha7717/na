@@ -2,25 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Offer;
 use App\Models\Order;
 use Illuminate\Http\Request;
 
-class OrderController extends Controller
+class OfferController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    //
     public function index()
     {
 
-      // $order= Order::all()->where('implemented','=','0');
-       $order=Order::query()->with('owner')->where('implemented','=','0')->get();
-       // $order= Order::find(1);
+        // $order= Order::all()->where('implemented','=','0');
+        $offer=Offer::query()->with(['driver','order'],)->get();
+        //$offer=Offer::find(1)->driver;
+        // $order= Order::find(1);
 
-      //dd($order);
-      return response([
-          'order'=> $order
-       ]);
+        //dd($order);
+        return response([
+            'offer'=>$offer
+        ]);
     }
 
 
@@ -30,16 +30,13 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $order=Order::create([
+        $offer=Offer::create([
                 'user_id'=>$request->user()->id,
-                'type'=>$request->type,
-                'from'=>$request->from,
-                'to'=>$request->to,
-                'from_time'=>$request->from_time,
-                'to_time'=>$request->to_time,
-                'implemented'=>$request->implemented
+                'order_id'=>$request->order_id,
+                'price'=>$request->price,
 
-        ]
+
+            ]
 
         );
     }
@@ -63,7 +60,7 @@ class OrderController extends Controller
         $order->from_time=$request->from_time;
         $order->to_time=$request->to_time;
         $order->implemented=$request->implemented;
-          $order->save();
+
     }
 
     /**
@@ -73,4 +70,6 @@ class OrderController extends Controller
     {
         //
     }
+
+
 }
