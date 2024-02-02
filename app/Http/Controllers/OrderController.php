@@ -69,8 +69,9 @@ class OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Order $order)
+    public function destroy(Request $request)
     {
         //
+        Order::find($request->id)->delete();
     }
 }

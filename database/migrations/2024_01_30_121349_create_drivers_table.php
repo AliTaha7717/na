@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('type');
             $table->boolean('verified')->default('0');
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->timestamps();
+
 
         });
     }

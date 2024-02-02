@@ -9,11 +9,11 @@ use Illuminate\Http\Request;
 class OfferController extends Controller
 {
     //
-    public function index()
+    public function index(Request $request)
     {
 
         // $order= Order::all()->where('implemented','=','0');
-        $offer=Offer::query()->with(['driver','order'],)->get();
+        $offer=Offer::query()->with(['driver','order'],)->where('order_id','=',$request->order_id)->get();
         //$offer=Offer::find(1)->driver;
         // $order= Order::find(1);
 
@@ -52,23 +52,17 @@ class OfferController extends Controller
      */
     public function update(Request $request, )
     {
-        $order=  Order::find($request->id);
-        $order->user_id=$request->user()->id;
-        $order->type=$request->type;
-        $order->from=$request->from;
-        $order->to=$request->to;
-        $order->from_time=$request->from_time;
-        $order->to_time=$request->to_time;
-        $order->implemented=$request->implemented;
-
+        $offer=Offer::find($request->id);
+        $offer->price=$request->price;
+        $offer->save();
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Order $order)
+    public function destroy(Request $request)
     {
-        //
+       Offer::find($request->id)->delete();
     }
 
 
