@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('order_id')->constrained('orders')->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->string('price');
+            $table->boolean('accepted')->default(0);
             $table->timestamps();
         });
     }

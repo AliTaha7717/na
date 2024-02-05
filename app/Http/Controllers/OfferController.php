@@ -38,10 +38,19 @@ class OfferController extends Controller
 
             ]
 
+
         );
+        return response([
+            'message'=>'succesful'
+        ]);
     }
 
-
+    public function accept(Request $request)
+    {
+        $offer=Offer::find($request->id);
+        $offer->accepted=1;
+        $offer->save();
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -55,6 +64,7 @@ class OfferController extends Controller
         $offer=Offer::find($request->id);
         $offer->price=$request->price;
         $offer->save();
+
     }
 
     /**

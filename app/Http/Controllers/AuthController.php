@@ -39,6 +39,7 @@ class AuthController extends Controller
             $validate= $request->validate([
                 'phone'=>'unique:users'
             ]);
+         //   dd($validate->error);
             if($validate) {
                 $user = User::create(
                     [

@@ -33,6 +33,7 @@ Route::middleware('auth:api')->group(function () {
         Route::post('/offers',[\App\Http\Controllers\OfferController::class,'index']);
         Route::post('/delete_offer',[\App\Http\Controllers\OfferController::class,'destroy']);
         Route::post('/update_offer',[\App\Http\Controllers\OfferController::class,'update']);
+        Route::post('/accept',[\App\Http\Controllers\OfferController::class,'accept']);
     });
 
 Route::get('send',[\App\Http\Controllers\SendController::class,'send']);
